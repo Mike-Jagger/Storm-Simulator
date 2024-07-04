@@ -47,3 +47,47 @@ document.addEventListener("DOMContentLoaded", () => {
         renderer.render(scene, camera);
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Initialize scene, camera, renderer, controls, and light as before
+    
+    const loader = new WebGLRenderingContext.GLTFLoader();
+
+    // Load models
+    loader.load('path_to_your_model/tree.glb', (gltf) => {
+        const tree = gltf.scene;
+        tree.position.set(0, 0, 0);
+        scene.add(tree);
+
+        loader.load('path_to_your_model/protection_system.glb', (gltf) => {
+            const protectionSystem = gltf.scene;
+            protectionSystem.position.set(2, 0, 0);
+            scene.add(protectionSystem);
+
+            loader.load('path_to_your_model/house.glb', (gltf) => {
+                const house = gltf.scene;
+                house.position.set(5, 0, 0);
+                scene.add(house);
+
+                // Start animation
+                animate();
+
+                // GSAP animation
+                gsap.to(protectionSystem.position, {
+                    x: 0,
+                    z: 2,
+                    duration: 5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut"
+                });
+            });
+        });
+    });
+
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+});
