@@ -18,19 +18,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const loader = new WebGLRenderingContext.GLTFLoader();
 
     // Load tree model
-    loader.load('path_to_your_model/tree.glb', (gltf) => {
+    loader.load('./test_tree.glb', (gltf) => {
         const tree = gltf.scene;
         tree.position.set(0, 0, 0);
         scene.add(tree);
 
         // Load protection system model
-        loader.load('path_to_your_model/protection_system.glb', (gltf) => {
+        loader.load('./test_protection_system.glb', (gltf) => {
             const protectionSystem = gltf.scene;
             protectionSystem.position.set(2, 0, 0);
             scene.add(protectionSystem);
 
             // Load house model
-            loader.load('path_to_your_model/house.glb', (gltf) => {
+            loader.load('./test_house.glb', (gltf) => {
                 const house = gltf.scene;
                 house.position.set(5, 0, 0);
                 scene.add(house);
@@ -54,17 +54,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const loader = new WebGLRenderingContext.GLTFLoader();
 
     // Load models
-    loader.load('path_to_your_model/tree.glb', (gltf) => {
+    loader.load('./test_tree.glb', (gltf) => {
         const tree = gltf.scene;
         tree.position.set(0, 0, 0);
         scene.add(tree);
 
-        loader.load('path_to_your_model/protection_system.glb', (gltf) => {
+        loader.load('./test_protection_system.glb', (gltf) => {
             const protectionSystem = gltf.scene;
             protectionSystem.position.set(2, 0, 0);
             scene.add(protectionSystem);
 
-            loader.load('path_to_your_model/house.glb', (gltf) => {
+            loader.load('./test_house.glb', (gltf) => {
                 const house = gltf.scene;
                 house.position.set(5, 0, 0);
                 scene.add(house);
