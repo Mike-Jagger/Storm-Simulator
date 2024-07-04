@@ -1,0 +1,97 @@
+Classes
+  Tree
+    Attributes:
+    - type: String
+    - momentumAbsorptionEfficiency: Float
+    - frontalAreaDensity: Float
+    Methods:
+    - calculateImpact(windSpeed, windDirection, precipitation): Float
+  
+  Protection
+    Attributes:
+    - type: String
+    - effectiveness: Float
+    Methods:
+    - applyProtection(tree: Tree): Void
+  
+  House
+    Attributes:
+    - location: String
+    - damageLevel: Float
+    Methods:
+    - calculateDamage(windSpeed, windDirection, treeImpact): Void
+  
+  Simulation
+    Attributes:
+    - trees: List<Tree>
+    - house: House
+    - windSpeed: Float
+    - windDirection: Float
+    - precipitation: Float
+    Methods:
+    - runSimulation(): Void
+    - displayResults(): Void
+
+  UI
+    Attributes:
+    - treeTypeDropdown: Dropdown
+    - windSpeedSlider: Slider
+    - precipitationSlider: Slider
+    - windDirectionSlider: Slider
+    - frontalAreaDensitySlider: Slider
+    Methods:
+    - getUserInputs(): Dictionary
+    - updateSimulation(simulation: Simulation): Void
+
+  Relationships
+    - Tree can have multiple Protection applied to it.
+    - Simulation includes multiple Tree objects and a single House.
+    - UI interacts with Simulation to update the parameters based on user inputs.
+
+
+
++-----------------+      +---------------+      +-------------+
+|      Tree       |      |  Protection   |      |    House    |
++-----------------+      +---------------+      +-------------+
+| - type: String  |      | - type: String|      | - location: |
+| - momentumAbsorp|      | - effectiveness: Float|  String    |
+|   tionEfficiency: Float|+applyProtection(tree: | - damageLevel|
+| - frontalAreaDensity:  |  Tree): Void   |  : Float   |
+|   Float          |      +---------------+      +-------------+
+| + calculateImpact|                           +---------------+
+|   (windSpeed,    |                           |  Simulation   |
+|   windDirection, |                           +---------------+
+|   precipitation):|                           | - trees: List |
+|   Float          |                           |  <Tree>       |
++-----------------+                           | - house: House|
+     * |                                      | - windSpeed:  |
+       |                                      |   Float       |
+       +------------------+                   | - windDirection|
+                           |                   |   : Float     |
+                           +-----------------------------------+
+                           | - runSimulation(): Void           |
+                           | - displayResults(): Void          |
+                           +-----------------------------------+
+                                       |
+                                       |
+                                       v
+                            +------------------+
+                            |       UI         |
+                            +------------------+
+                            | - treeTypeDropdown:|
+                            |   Dropdown         |
+                            | - windSpeedSlider: |
+                            |   Slider           |
+                            | - precipitationSlider|
+                            |   : Slider          |
+                            | - windDirectionSlider|
+                            |   : Slider          |
+                            | - frontalAreaDensity|
+                            |   Slider            |
+                            +------------------+
+                            | + getUserInputs()  |
+                            |   : Dictionary     |
+                            | + updateSimulation |
+                            |   (simulation: Simulation):|
+                            |   Void             |
+                            +------------------+
