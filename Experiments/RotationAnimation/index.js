@@ -21,7 +21,7 @@ let windDirection = 0;
 
 // Load the house model
 const objLoader = new THREE.OBJLoader();
-objLoader.load('./House.obj', function (object) {
+objLoader.load('./models/House.obj', function (object) {
     object.traverse(function (child) {
         if (child instanceof THREE.Mesh) {
             child.material = new THREE.MeshStandardMaterial({ color: 0x808080 }); // Assign color or texture
