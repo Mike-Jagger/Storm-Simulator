@@ -18,6 +18,11 @@ scene.add(light);
 let windSpeed = 0;
 let windDirection = 0;
 let precipitation = 0;
+let landDimensions = {
+    x: null,
+    y: null,
+    z: null
+};
 
 // Load the house model
 const objLoader = new THREE.OBJLoader();
@@ -32,6 +37,14 @@ objLoader.load('./models/land.obj', function (object) {
     object.scale.set(1, 1, 0.5);
     object.rotation.x = -Math.PI / 2;
     object.position.set(0, -5, 0);
+
+    const landBox = new THREE.Box3().setFromObject(object);
+    landDimensions = {
+        x: landBox.max.x - landBox.min.x,
+        y: landBox.max.y - landBox.min.y,
+        z: landBox.max.z - landBox.min.z
+    }
+    // console.log(landDimensions);
     scene.add(object);
 });
 
@@ -122,6 +135,7 @@ function addTree(position) {
             windSpeed = parseFloat(document.getElementById('windSpeed').value);
             // console.log("Direction", windDirection, windSpeed, precipitation);
             updateTreeRotation();
+            updatePrecipitation();
         });
     
         // Initial update
