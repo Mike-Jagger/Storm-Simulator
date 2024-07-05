@@ -57,31 +57,37 @@ function updatePrecipitation(landDimensions, landBox) {
             clearTimeout(precipitationTimeout);
         }
 
-        // Create a sphere (rain droplet)
-        const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small sphere for the rain droplet
-        const material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF }); // White color for the droplet
-        const droplet = new THREE.Mesh(geometry, material);
+        // Function to create and animate a single droplet
+        function createDroplet() {
+            const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small sphere for the rain droplet
+            const material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF }); // White color for the droplet
+            const droplet = new THREE.Mesh(geometry, material);
 
-        // Random position within the land dimensions
-        const randomX = Math.random() * landDimensions.x + landBox.min.x;
-        const randomZ = Math.random() * landDimensions.z + landBox.min.z;
-        const startY = 100; // Starting height for the droplet
+            // Random position within the land dimensions
+            const randomX = Math.random() * landDimensions.x + landBox.min.x;
+            const randomZ = Math.random() * landDimensions.z + landBox.min.z;
+            const startY = 100; // Starting height for the droplet
 
-        droplet.position.set(0, startY, 0);
-        scene.add(droplet);
+            droplet.position.set(0, startY, 0);
+            scene.add(droplet);
 
-        // Animate the droplet falling
-        gsap.to(droplet.position, {
-            duration: 2, // Fall duration
-            y: landBox.min.y, // End position (ground level)
-            ease: 'linear',
-            onComplete: () => {
-                // Remove the droplet from the scene after it falls
-                scene.remove(droplet);
-                droplet.geometry.dispose();
-                droplet.material.dispose();
-            }
-        });
+            // Animate the droplet falling
+            gsap.to(droplet.position, {
+                duration: 2, // Fall duration
+                y: landBox.min.y, // End position (ground level)
+                ease: 'linear',
+                onComplete: () => {
+                    // Remove the droplet from the scene after it falls
+                    scene.remove(droplet);
+                    droplet.geometry.dispose();
+                    droplet.material.dispose();
+                }
+            });
+        }
+
+        for (let i = 0; i < precipitation * landDimensions.x) {
+            createDroplet();
+        }
 
         // Create continuous rain
         precipitationTimeout = setTimeout(() => updatePrecipitation(landDimensions, landBox), (10 - precipitation + 1) * 100);
