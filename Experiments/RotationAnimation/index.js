@@ -29,7 +29,7 @@ objLoader.load('./models/House.obj', function (object) {
     });
     object.scale.set(2, 2, 2);
     object.position.set(0, 0, 0);
-    scene.add(object);
+    // scene.add(object);
 });
 
 // Function to add a tree at a specific position
@@ -48,9 +48,12 @@ function addTree(position) {
         // Define the swaying animation for the tree using GSAP
         gsap.to(object.rotation, {
             duration: 2 / windSpeed, // Adjust duration based on wind speed
-            x: "+=" + (0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180)), // Adjust tilt based on wind direction
-            y: "+=" + (0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
-            z: "+=" + (0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
+            // x: (0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180)), // Adjust tilt based on wind direction
+            // y: (0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
+            // z: (0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
+            x: "+=" + (windDirection * Math.PI / 180), // Adjust tilt based on wind direction
+            // y: (windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
+            // z: (windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
             yoyo: true,
             repeat: -1,
             ease: 'sine.inOut'
@@ -83,11 +86,15 @@ document.getElementById('windDirection').addEventListener('input', function() {
 function updateTreeAnimations() {
     scene.traverse(function(object) {
         if (object instanceof THREE.Group) {
+            object.rotation.x = -Math.PI / 2; // Ensure tree stands upright
             gsap.to(object.rotation, {
                 duration: 2 / windSpeed, // Adjust duration based on wind speed
-                x: "+=" + (0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180)), // Adjust tilt based on wind direction
-                y: "+=" + (0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
-                z: "+=" + (0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
+                // x: (0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180)), // Adjust tilt based on wind direction
+                // y: (0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
+                // z: (0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
+                x: "+=" + (windDirection * Math.PI / 180), // Adjust tilt based on wind direction
+                // y: (windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
+                // z: (windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
                 yoyo: true,
                 repeat: -1,
                 ease: 'sine.inOut'
