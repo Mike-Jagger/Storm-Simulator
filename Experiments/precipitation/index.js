@@ -17,6 +17,7 @@ scene.add(light);
 // Variables for wind speed and direction
 let windSpeed = 0;
 let windDirection = 0;
+let precipitation = 0;
 
 // Load the house model
 const objLoader = new THREE.OBJLoader();
@@ -100,7 +101,8 @@ function addTree(position) {
         document.getElementById('windSpeed').addEventListener('input', function() {
             windSpeed = parseFloat(this.value);
             windDirection = parseFloat(document.getElementById('windDirection').value);
-            // console.log("Speed", windDirection, windSpeed);
+            precipitation = parseFloat(document.getElementById('precipitation').value);
+            // console.log("Speed", windDirection, windSpeed, precipitation);
             updateTreeRotation();
         });
     
@@ -108,7 +110,17 @@ function addTree(position) {
         document.getElementById('windDirection').addEventListener('input', function() {
             windDirection = parseFloat(this.value);
             windSpeed = parseFloat(document.getElementById('windSpeed').value);
-            // console.log("Direction", windDirection, windSpeed);
+            precipitation = parseFloat(document.getElementById('precipitation').value);
+            // console.log("Direction", windDirection, windSpeed, precipitation);
+            updateTreeRotation();
+        });
+
+        // Listen for wind direction changes
+        document.getElementById('precipitation').addEventListener('input', function() {
+            precipitation = parseFloat(this.value);
+            windDirection = parseFloat(document.getElementById('windDirection').value);
+            windSpeed = parseFloat(document.getElementById('windSpeed').value);
+            // console.log("Direction", windDirection, windSpeed, precipitation);
             updateTreeRotation();
         });
     
