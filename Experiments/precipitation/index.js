@@ -39,7 +39,8 @@ function addTree(position) {
     objLoader.load('./models/Tree.obj', function (object) {
         object.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
-                child.material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Assign color or texture
+                child.material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+                child.material.map = textureLoader.load('./models/tree.jpg');
             }
         });
         object.scale.set(0.025, 0.025, 0.025);
