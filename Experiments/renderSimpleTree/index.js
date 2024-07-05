@@ -34,14 +34,15 @@ objLoader.load('./Tree.obj', function (object) {
             child.material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Assign color or texture
         }
     });
-    object.scale.set(0.5, 0.5, 0.5);
+    object.scale.set(0.025, 0.025, 0.025);
+    object.rotation.x = -Math.PI / 2;
     object.position.set(-2, 0, -5);
     scene.add(object);
 
     // Define the swaying animation for the tree using GSAP
     gsap.to(object.rotation, {
         duration: 2,
-        x: 0.05,
+        x: -1.5,
         yoyo: true,
         repeat: -1,
         ease: 'sine.inOut'
