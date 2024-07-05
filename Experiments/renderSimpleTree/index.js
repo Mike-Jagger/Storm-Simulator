@@ -13,14 +13,14 @@ scene.add(light);
 
 // Load the house model
 const objLoader = new THREE.OBJLoader();
-objLoader.load('./models/House.obj', function (object) {
+objLoader.load('./House.obj', function (object) {
     object.scale.set(0.5, 0.5, 0.5);
     object.position.set(0, 0, -5);
     scene.add(object);
 });
 
 // Load the tree model
-objLoader.load('./models/Tree.obj', function (object) {
+objLoader.load('./Tree.obj', function (object) {
     object.scale.set(0.5, 0.5, 0.5);
     object.position.set(-2, 0, -5);
     scene.add(object);
