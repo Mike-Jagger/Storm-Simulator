@@ -41,16 +41,16 @@ function addTree(position) {
             }
         });
         object.scale.set(0.025, 0.025, 0.025);
-        object.rotation.x = -Math.PI / 2;
+        object.rotation.x = -Math.PI / 2; // Ensure tree stands upright
         object.position.set(position.x, position.y, position.z);
         scene.add(object);
 
         // Define the swaying animation for the tree using GSAP
         gsap.to(object.rotation, {
             duration: 2 / windSpeed, // Adjust duration based on wind speed
-            x: 0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180), // Adjust tilt based on wind direction
-            y: 0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
-            z: 0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
+            x: "+=" + (0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180)), // Adjust tilt based on wind direction
+            y: "+=" + (0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
+            z: "+=" + (0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
             yoyo: true,
             repeat: -1,
             ease: 'sine.inOut'
@@ -85,9 +85,9 @@ function updateTreeAnimations() {
         if (object instanceof THREE.Group) {
             gsap.to(object.rotation, {
                 duration: 2 / windSpeed, // Adjust duration based on wind speed
-                x: 0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180), // Adjust tilt based on wind direction
-                y: 0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
-                z: 0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
+                x: "+=" + (0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180)), // Adjust tilt based on wind direction
+                y: "+=" + (0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
+                z: "+=" + (0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180)), // Adjust swaying amplitude based on wind direction
                 yoyo: true,
                 repeat: -1,
                 ease: 'sine.inOut'
