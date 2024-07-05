@@ -68,7 +68,7 @@ function updatePrecipitation(landDimensions, landBox) {
             const randomZ = Math.random() * landDimensions.z + landBox.min.z;
             const startY = 100; // Starting height for the droplet
 
-            droplet.position.set(0, startY, 0);
+            droplet.position.set(randomX, startY, randomZ);
             scene.add(droplet);
 
             // Animate the droplet falling
@@ -85,7 +85,7 @@ function updatePrecipitation(landDimensions, landBox) {
             });
         }
 
-        for (let i = 0; i < precipitation * landDimensions.x; i++) {
+        for (let i = 0; i < precipitation * landDimensions.x / 10; i++) {
             createDroplet();
         }
 
