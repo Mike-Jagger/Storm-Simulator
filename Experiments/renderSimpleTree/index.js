@@ -1,6 +1,4 @@
-import * as THREE from 'three';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-import { gsap } from 'gsap';
+import { OBJLoader } from 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/loaders/OBJLoader.js';
 
 // Set up the scene, camera, and renderer
 const scene = new THREE.Scene();
@@ -16,23 +14,21 @@ light.position.set(10, 20, 10);
 scene.add(light);
 
 // Load the house model
-const loader = new OBJLoader();
-loader.load('./House.obj', function (gltf) {
-    const house = gltf.scene;
-    house.scale.set(0.5, 0.5, 0.5);
-    house.position.set(0, 0, -5);
-    scene.add(house);
+const objLoader = new OBJLoader();
+objLoader.load('./House.obj', function (object) {
+    object.scale.set(0.5, 0.5, 0.5);
+    object.position.set(0, 0, -5);
+    scene.add(object);
 });
 
 // Load the tree model
-loader.load('./Tree.obj', function (gltf) {
-    const tree = gltf.scene;
-    tree.scale.set(0.5, 0.5, 0.5);
-    tree.position.set(-2, 0, -5);
-    scene.add(tree);
+objLoader.load('./Tree.obj', function (object) {
+    object.scale.set(0.5, 0.5, 0.5);
+    object.position.set(-2, 0, -5);
+    scene.add(object);
 
     // Define the swaying animation for the tree using GSAP
-    gsap.to(tree.rotation, {
+    gsap.to(object.rotation, {
         duration: 2,
         x: 0.05,
         yoyo: true,
