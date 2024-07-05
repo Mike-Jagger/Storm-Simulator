@@ -60,6 +60,7 @@ objLoader.load('./models/Tree.obj', function (object) {
         // console.log("Angle:", (object.rotation.y * 180/Math.PI), "swayY:",swayY);
 
         object.rotation.y = 0;
+        object.rotation.x = -Math.PI / 2;
 
         // const angle = windDirection * Math.PI / 180; // Convert wind direction to radians
         // const sway = (1 * Math.sin(angle + 1)) + 0.01 * windSpeed; // Calculate swaying factor

@@ -73,6 +73,7 @@ function addTree(position) {
             // console.log("Angle:", (object.rotation.y * 180/Math.PI), "swayY:",swayY);
     
             object.rotation.y = 0;
+            object.rotation.x = -Math.PI / 2;
     
             // const angle = windDirection * Math.PI / 180; // Convert wind direction to radians
             // const sway = (1 * Math.sin(angle + 1)) + 0.01 * windSpeed; // Calculate swaying factor
@@ -95,7 +96,7 @@ function addTree(position) {
         document.getElementById('windSpeed').addEventListener('input', function() {
             windSpeed = parseFloat(this.value);
             windDirection = parseFloat(document.getElementById('windDirection').value);
-            console.log("Speed", windDirection, windSpeed);
+            // console.log("Speed", windDirection, windSpeed);
             updateTreeRotation();
         });
     
@@ -103,7 +104,7 @@ function addTree(position) {
         document.getElementById('windDirection').addEventListener('input', function() {
             windDirection = parseFloat(this.value);
             windSpeed = parseFloat(document.getElementById('windSpeed').value);
-            console.log("Direction", windDirection, windSpeed);
+            // console.log("Direction", windDirection, windSpeed);
             updateTreeRotation();
         });
     
