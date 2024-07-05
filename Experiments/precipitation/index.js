@@ -85,7 +85,7 @@ function updatePrecipitation(landDimensions, landBox) {
             });
         }
 
-        for (let i = 0; i < precipitation * landDimensions.x) {
+        for (let i = 0; i < precipitation * landDimensions.x; i++) {
             createDroplet();
         }
 
