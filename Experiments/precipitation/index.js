@@ -48,6 +48,20 @@ objLoader.load('./models/land.obj', function (object) {
     scene.add(object);
 });
 
+function updatePrecipitation() {
+    objLoader.load('./models/rock.obj', function (object) {
+        object.traverse(function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
+            }
+        });
+        object.scale.set(2, 2, 2);
+        object.position.set(0, 10, 0);
+        
+        scene.add(object);
+    });
+}
+
 // Function to add a tree at a specific position
 function addTree(position) {
     objLoader.load('./models/Tree.obj', function (object) {
@@ -151,6 +165,7 @@ const treePositions = [
     { x: -15, y: 0, z: -10 }
 ];
 
+updatePrecipitation();
 treePositions.forEach(position => addTree(position));
 
 // Render loop
