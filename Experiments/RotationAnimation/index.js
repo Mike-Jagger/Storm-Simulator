@@ -48,18 +48,12 @@ function addTree(position) {
         // Define the swaying animation for the tree using GSAP
         gsap.to(object.rotation, {
             duration: 2 / windSpeed, // Adjust duration based on wind speed
-            x: 0.01 * windSpeed, // Adjust swaying amplitude based on wind speed
+            x: 0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180), // Adjust tilt based on wind direction
+            y: 0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
+            z: 0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
             yoyo: true,
             repeat: -1,
-            ease: 'sine.inOut',
-            modifiers: {
-                x: function(x) {
-                    return Math.sin(windDirection * Math.PI / 180) * x;
-                },
-                y: function(y) {
-                    return Math.cos(windDirection * Math.PI / 180) * y;
-                }
-            }
+            ease: 'sine.inOut'
         });
     });
 }
@@ -73,17 +67,6 @@ const treePositions = [
 ];
 
 treePositions.forEach(position => addTree(position));
-
-objLoader.load('./models/House.obj', function (object) {
-    object.traverse(function (child) {
-        if (child instanceof THREE.Mesh) {
-            child.material = new THREE.MeshStandardMaterial({ color: 0x808080 }); // Assign color or texture
-        }
-    });
-    object.scale.set(2, 2, 2);
-    object.position.set(0, 0, 0);
-    scene.add(object);
-});
 
 // Update wind speed and direction based on slider values
 document.getElementById('windSpeed').addEventListener('input', function() {
@@ -99,21 +82,15 @@ document.getElementById('windDirection').addEventListener('input', function() {
 // Function to update tree animations based on wind speed and direction
 function updateTreeAnimations() {
     scene.traverse(function(object) {
-        if (object instanceof THREE.Group && object.name === 'Tree') {
+        if (object instanceof THREE.Group) {
             gsap.to(object.rotation, {
                 duration: 2 / windSpeed, // Adjust duration based on wind speed
-                x: 0.01 * windSpeed, // Adjust swaying amplitude based on wind speed
+                x: 0.005 * windSpeed * Math.cos(windDirection * Math.PI / 180), // Adjust tilt based on wind direction
+                y: 0.01 * windSpeed * Math.sin(windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
+                z: 0.005 * windSpeed * Math.sin(windDirection * Math.PI / 180), // Adjust swaying amplitude based on wind direction
                 yoyo: true,
                 repeat: -1,
-                ease: 'sine.inOut',
-                modifiers: {
-                    x: function(x) {
-                        return Math.sin(windDirection * Math.PI / 180) * x;
-                    },
-                    y: function(y) {
-                        return Math.cos(windDirection * Math.PI / 180) * y;
-                    }
-                }
+                ease: 'sine.inOut'
             });
         }
     });
