@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import { gsap } from 'gsap';
 
 // Set up the scene, camera, and renderer
@@ -16,7 +16,7 @@ light.position.set(10, 20, 10);
 scene.add(light);
 
 // Load the house model
-const loader = new GLTFLoader();
+const loader = new OBJLoader();
 loader.load('./House.obj', function (gltf) {
     const house = gltf.scene;
     house.scale.set(0.5, 0.5, 0.5);
