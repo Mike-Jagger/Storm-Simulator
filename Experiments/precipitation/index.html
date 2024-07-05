@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wind Impact Simulation</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+        .controls { position: fixed; top: 10px; left: 10px; z-index: 100; }
+        .controls label { display: block; }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label>
+            Wind Speed: <input type="range" id="windSpeed" min="0" max="120" step="1" value="0">
+        </label>
+        <label>
+            Wind Direction: <input type="range" id="windDirection" min="0" max="360" step="1" value="0">
+        </label>
+    </div>
+    <div id="render-container">
+        <!-- Render 3d Animation here -->
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/OBJLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
