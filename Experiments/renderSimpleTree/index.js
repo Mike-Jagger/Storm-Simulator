@@ -4,7 +4,8 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-camera.position.z = 10;
+camera.position.z = 40;
+camera.position.y = 40;
 
 // Add OrbitControls for mouse interaction
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -22,8 +23,8 @@ objLoader.load('./House.obj', function (object) {
             child.material = new THREE.MeshStandardMaterial({ color: 0x808080 }); // Assign color or texture
         }
     });
-    object.scale.set(0.5, 0.5, 0.5);
-    object.position.set(0, 0, -5);
+    object.scale.set(2, 2, 2);
+    object.position.set(0, 0, 0);
     scene.add(object);
 });
 
@@ -36,7 +37,70 @@ objLoader.load('./Tree.obj', function (object) {
     });
     object.scale.set(0.025, 0.025, 0.025);
     object.rotation.x = -Math.PI / 2;
-    object.position.set(-2, 0, -5);
+    object.position.set(10, 0, 10);
+    scene.add(object);
+
+    // Define the swaying animation for the tree using GSAP
+    gsap.to(object.rotation, {
+        duration: 2,
+        x: -1.5,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+    });
+});
+
+objLoader.load('./Tree.obj', function (object) {
+    object.traverse(function (child) {
+        if (child instanceof THREE.Mesh) {
+            child.material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Assign color or texture
+        }
+    });
+    object.scale.set(0.025, 0.025, 0.025);
+    object.rotation.x = -Math.PI / 2;
+    object.position.set(10, 0, -10);
+    scene.add(object);
+
+    // Define the swaying animation for the tree using GSAP
+    gsap.to(object.rotation, {
+        duration: 2,
+        x: -1.5,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+    });
+});
+
+objLoader.load('./Tree.obj', function (object) {
+    object.traverse(function (child) {
+        if (child instanceof THREE.Mesh) {
+            child.material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Assign color or texture
+        }
+    });
+    object.scale.set(0.025, 0.025, 0.025);
+    object.rotation.x = -Math.PI / 2;
+    object.position.set(-15, 0, 10);
+    scene.add(object);
+
+    // Define the swaying animation for the tree using GSAP
+    gsap.to(object.rotation, {
+        duration: 2,
+        x: -1.5,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+    });
+});
+
+objLoader.load('./Tree.obj', function (object) {
+    object.traverse(function (child) {
+        if (child instanceof THREE.Mesh) {
+            child.material = new THREE.MeshStandardMaterial({ color: 0x00ff00 }); // Assign color or texture
+        }
+    });
+    object.scale.set(0.025, 0.025, 0.025);
+    object.rotation.x = -Math.PI / 2;
+    object.position.set(-15, 0, -10);
     scene.add(object);
 
     // Define the swaying animation for the tree using GSAP
