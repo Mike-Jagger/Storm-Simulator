@@ -23,6 +23,7 @@ let landDimensions = {
     y: null,
     z: null
 };
+let landBox;
 
 // Load the house model
 const objLoader = new THREE.OBJLoader();
@@ -38,27 +39,41 @@ objLoader.load('./models/land.obj', function (object) {
     object.rotation.x = -Math.PI / 2;
     object.position.set(0, -5, 0);
 
-    const landBox = new THREE.Box3().setFromObject(object);
+    landBox = new THREE.Box3().setFromObject(object);
     landDimensions = {
         x: landBox.max.x - landBox.min.x,
         y: landBox.max.y - landBox.min.y,
         z: landBox.max.z - landBox.min.z
     }
-    // console.log(landDimensions);
+    updatePrecipitation(landDimensions, landBox);
     scene.add(object);
 });
 
-function updatePrecipitation() {
-    objLoader.load('./models/rock.obj', function (object) {
-        object.traverse(function (child) {
-            if (child instanceof THREE.Mesh) {
-                child.material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
-            }
-        });
-        object.scale.set(2, 2, 2);
-        object.position.set(0, 10, 0);
-        
-        scene.add(object);
+function updatePrecipitation(landDimensions, landBox) {
+    // Create a sphere (rain droplet)
+    const geometry = new THREE.SphereGeometry(0.1, 32, 32); // Small sphere for the rain droplet
+    const material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF }); // White color for the droplet
+    const droplet = new THREE.Mesh(geometry, material);
+
+    // Random position within the land dimensions
+    const randomX = Math.random() * landDimensions.x + landBox.min.x;
+    const randomZ = Math.random() * landDimensions.z + landBox.min.z;
+    const startY = 100; // Starting height for the droplet
+
+    droplet.position.set(0, startY, 0);
+    scene.add(droplet);
+
+    // Animate the droplet falling
+    gsap.to(droplet.position, {
+        duration: 2, // Fall duration
+        y: landBox.min.y, // End position (ground level)
+        ease: 'linear',
+        onComplete: () => {
+            // Remove the droplet from the scene after it falls
+            scene.remove(droplet);
+            droplet.geometry.dispose();
+            droplet.material.dispose();
+        }
     });
 }
 
@@ -149,7 +164,7 @@ function addTree(position) {
             windSpeed = parseFloat(document.getElementById('windSpeed').value);
             // console.log("Direction", windDirection, windSpeed, precipitation);
             updateTreeRotation();
-            updatePrecipitation();
+            updatePrecipitation(landDimensions, landBox);
         });
     
         // Initial update
@@ -165,7 +180,6 @@ const treePositions = [
     { x: -15, y: 0, z: -10 }
 ];
 
-updatePrecipitation();
 treePositions.forEach(position => addTree(position));
 
 // Render loop
