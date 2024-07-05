@@ -75,6 +75,9 @@ function updatePrecipitation(landDimensions, landBox) {
             droplet.material.dispose();
         }
     });
+
+    // Create continuous rain
+    setTimeout(() => updatePrecipitation(landDimensions, landBox), 100);
 }
 
 // Function to add a tree at a specific position
