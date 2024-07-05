@@ -17,7 +17,7 @@ scene.add(light);
 
 // Load the house model
 const loader = new GLTFLoader();
-loader.load('path/to/house_model.gltf', function (gltf) {
+loader.load('./House.obj', function (gltf) {
     const house = gltf.scene;
     house.scale.set(0.5, 0.5, 0.5);
     house.position.set(0, 0, -5);
@@ -25,7 +25,7 @@ loader.load('path/to/house_model.gltf', function (gltf) {
 });
 
 // Load the tree model
-loader.load('path/to/tree_model.gltf', function (gltf) {
+loader.load('./Tree.obj', function (gltf) {
     const tree = gltf.scene;
     tree.scale.set(0.5, 0.5, 0.5);
     tree.position.set(-2, 0, -5);
