@@ -20,14 +20,17 @@ let windDirection = 0;
 
 // Load the house model
 const objLoader = new THREE.OBJLoader();
-objLoader.load('./models/House.obj', function (object) {
+const textureLoader = new THREE.TextureLoader();
+objLoader.load('./models/land.obj', function (object) {
     object.traverse(function (child) {
         if (child instanceof THREE.Mesh) {
             child.material = new THREE.MeshStandardMaterial({ color: 0x808080 }); // Assign color or texture
+            child.material.map = textureLoader.load('./models/land.jpg');
         }
     });
-    object.scale.set(2, 2, 2);
-    object.position.set(0, 0, 0);
+    object.scale.set(1, 1, 0.5);
+    object.rotation.x = -Math.PI / 2;
+    object.position.set(0, -5, 0);
     scene.add(object);
 });
 
