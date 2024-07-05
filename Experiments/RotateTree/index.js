@@ -16,7 +16,7 @@ scene.add(light);
 
 // Wind direction and speed variables
 let windDirection = 0;
-let windSpeed = 1;
+let windSpeed = 0;
 
 // Load the tree model
 const objLoader = new THREE.OBJLoader();
@@ -33,17 +33,45 @@ objLoader.load('./models/Tree.obj', function (object) {
 
     // Define the swaying animation for the tree based on wind direction and speed
     const updateTreeRotation = () => {
-        const angle = windDirection * Math.PI / 180; // Convert wind direction to radians
-        const sway = (1 * Math.sin(angle + 1)) + 0.01 * windSpeed; // Calculate swaying factor
-        console.log((object.rotation.x * 180/Math.PI) + 90);
+        let isPositiveX = false;
+        if (windDirection >= 0 && windDirection < 90 || windDirection > 270 && windDirection <= 360) {
+            isPositiveX = true;
+        }
+
+        let isPositiveY = false;
+        if (windDirection > 0 && windDirection < 180) {
+            isPositiveY = true;
+        }
+
+        let swayX = isPositiveX ? (windSpeed * 0.5) * (Math.PI / 180) : (-windSpeed * 0.5) * (Math.PI / 180);
+        let swayY = isPositiveY ? (-windSpeed * 0.5) * (Math.PI / 180) : (windSpeed * 0.5) * (Math.PI / 180);
+
+        if (windDirection === 0 || windDirection === 360 || windDirection === 180) {
+            swayY = 0;
+        }
+        if (windDirection === 90 || windDirection === 270) {
+            swayX = 0;
+        }
+
+        swayX = swayX === -0 ? 0 : swayX;
+        swayY = swayY === -0 ? 0 : swayY;
+
+        // console.log("Angle:", (object.rotation.x * 180/Math.PI) + 90, "swayX:",swayX);
+        // console.log("Angle:", (object.rotation.y * 180/Math.PI), "swayY:",swayY);
+
+        object.rotation.y = 0;
+
+        // const angle = windDirection * Math.PI / 180; // Convert wind direction to radians
+        // const sway = (1 * Math.sin(angle + 1)) + 0.01 * windSpeed; // Calculate swaying factor
 
         // Stop any previous animation
         gsap.killTweensOf(object.rotation);
 
         // Apply new animation
         gsap.to(object.rotation, {
-            duration: 2 / windSpeed, // Adjust duration based on wind speed
-            x: (-Math.PI / 2), // Apply swaying to x-axis while keeping tree upright
+            duration: 20 / windSpeed, // Adjust duration based on wind speed
+            x: (-Math.PI / 2) + swayX, // Apply swaying to x-axis while keeping tree upright
+            y: "+=" + swayY,
             yoyo: true,
             repeat: -1,
             ease: 'sine.inOut'
@@ -54,7 +82,7 @@ objLoader.load('./models/Tree.obj', function (object) {
     document.getElementById('windSpeed').addEventListener('input', function() {
         windSpeed = parseFloat(this.value);
         windDirection = parseFloat(document.getElementById('windDirection').value);
-        console.log("Speed", windDirection, windSpeed);
+        // console.log("Speed", windDirection, windSpeed);
         updateTreeRotation();
     });
 
@@ -62,7 +90,7 @@ objLoader.load('./models/Tree.obj', function (object) {
     document.getElementById('windDirection').addEventListener('input', function() {
         windDirection = parseFloat(this.value);
         windSpeed = parseFloat(document.getElementById('windSpeed').value);
-        console.log("Direction", windDirection, windSpeed);
+        // console.log("Direction", windDirection, windSpeed);
         updateTreeRotation();
     });
 
