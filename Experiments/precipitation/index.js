@@ -55,7 +55,7 @@ objLoader.load('./models/land.obj', function (object) {
 });
 
 const dropletPool = [];
-const maxDroplets = 1000;
+const maxDroplets = 5000;
 
 function initializeDropletPool() {
     for (let i = 0; i < maxDroplets; i++) {
