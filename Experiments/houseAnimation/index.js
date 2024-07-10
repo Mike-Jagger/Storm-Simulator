@@ -14,10 +14,6 @@ const light = new THREE.DirectionalLight(0xffffff, 1);
 light.position.set(10, 20, 10);
 scene.add(light);
 
-// Variables for wind speed and direction
-let windSpeed = 0;
-let windDirection = 0;
-let precipitation = 0;
 let landDimensions = {
     x: null,
     y: null,
@@ -46,75 +42,11 @@ objLoader.load('./models/land.obj', function (object) {
         y: landBox.max.y - landBox.min.y,
         z: landBox.max.z - landBox.min.z
     }
-
-    // Initialize droplet pool
-    initializeDropletPool();
-    // Render precipiation
-    updatePrecipitation(landDimensions, landBox);
     scene.add(object);
 });
 
-const dropletPool = [];
-const maxDroplets = 5000;
-
-function initializeDropletPool() {
-    for (let i = 0; i < maxDroplets; i++) {
-        const geometry = new THREE.SphereGeometry(0.1, 32, 32);
-        const material = new THREE.MeshStandardMaterial({ color: 0xFFFFFF });
-        const droplet = new THREE.Mesh(geometry, material);
-        droplet.visible = false; // Initially hide all droplets
-        scene.add(droplet);
-        dropletPool.push(droplet);
-    }
-}
-
-function updatePrecipitation(landDimensions, landBox) {
-    let precipitation = parseInt(document.getElementById('precipitation').value);
-    if (precipitation) {
-        if (precipitationTimeout) {
-            clearTimeout(precipitationTimeout);
-        }
-
-        // Function to create and animate a single droplet
-        function createDroplet() {
-            const droplet = dropletPool.find(d => !d.visible);
-
-            if (!droplet) {
-                // If no hidden droplet is found in the pool, return early
-                return;
-            }
-
-            // Random position within the land dimensions
-            const randomX = Math.random() * landDimensions.x + landBox.min.x;
-            const randomZ = Math.random() * landDimensions.z + landBox.min.z;
-            const startY = 100; // Starting height for the droplet
-
-            droplet.position.set(randomX, startY, randomZ);
-            droplet.visible = true;
-
-            // Animate the droplet falling
-            gsap.to(droplet.position, {
-                duration: 2, // Fall duration
-                y: landBox.min.y, // End position (ground level)
-                ease: 'linear',
-                onComplete: () => {
-                    // Hide the droplet instead of removing it
-                    droplet.visible = false;
-                }
-            });
-        }
-
-        for (let i = 0; i < precipitation * landDimensions.x / 10; i++) {
-            createDroplet();
-        }
-
-        // Create continuous rain
-        precipitationTimeout = setTimeout(() => updatePrecipitation(landDimensions, landBox), (10 - precipitation + 1) * 100);
-    }
-}
-
 // Function to add a tree at a specific position
-function addTree(position) {
+function addHouseItem(position) {
     objLoader.load('./models/Tree.obj', function (object) {
         object.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
@@ -209,14 +141,14 @@ function addTree(position) {
 }
 
 // Add multiple trees at different positions
-const treePositions = [
+const houseItemsPositions = [
     { x: 10, y: 0, z: 10 },
     { x: 10, y: 0, z: -10 },
     { x: -15, y: 0, z: 10 },
     { x: -15, y: 0, z: -10 }
 ];
 
-treePositions.forEach(position => addTree(position));
+houseItemsPositions.forEach(item => addHouseItem(item));
 
 // Render loop
 function animate() {
