@@ -47,11 +47,11 @@ objLoader.load('./models/land.obj', function (object) {
 
 // Function to add a tree at a specific position
 function addHouseItem(position) {
-    objLoader.load('./models/Tree.obj', function (object) {
+    objLoader.load(`./models/${position.pathToObject}`, function (object) {
         object.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
                 child.material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-                child.material.map = textureLoader.load('./models/tree.jpg');
+                child.material.map = textureLoader.load(`./models/${position.pathToImage}`);
             }
         });
         object.scale.set(0.025, 0.025, 0.025);
@@ -142,10 +142,16 @@ function addHouseItem(position) {
 
 // Add multiple trees at different positions
 const houseItemsPositions = [
-    { x: 10, y: 0, z: 10 },
-    { x: 10, y: 0, z: -10 },
-    { x: -15, y: 0, z: 10 },
-    { x: -15, y: 0, z: -10 }
+    { pathToObject: 'models/column/column.obj', pathToImage: 'models/column/column.jpg', x: 10, y: 0, z: 10 },
+    { pathToObject: 'models/gate/gate.obj', pathToImage: 'models/gate/gate.jpg', x: 10, y: 0, z: 10 },
+    { pathToObject: 'models/floor/floor.obj', pathToImage: 'models/floor/floor.jpg', x: 10, y: 0, z: 10 },
+    { pathToObject: 'models/hedge/hedge.obj', pathToImage: 'models/hedge/hedge.jpg', x: 10, y: 0, z: 10 },
+    { pathToObject: 'models/lista/lista.obj', pathToImage: 'models/lista/lista.jpg', x: 10, y: 0, z: 10 },
+    { pathToObject: 'models/red gate/red gate.obj', pathToImage: 'models/red gate/red gate.jpg', x: 10, y: 0, z: 10 },
+    { pathToObject: 'models/roof_down/roof_down.obj', pathToImage: 'models/roof_down/roof_down.jpg', x: 10, y: 0, z: 10 },
+    { pathToObject: 'models/roof_top/roof_top.obj', pathToImage: 'models/roof_top/roof_top.jpg', x: 10, y: 0, z: 10 },
+    { pathToObject: 'models/shoji/shoji.obj', pathToImage: 'models/shoji/shoji.jpg', x: 10, y: 0, z: 10 },
+    { pathToObject: 'models/tatami/tatami.obj', pathToImage: 'models/tatami/tatami.jpg', x: 10, y: 0, z: 10 },
 ];
 
 houseItemsPositions.forEach(item => addHouseItem(item));
