@@ -47,6 +47,10 @@ objLoader.load('./models/land.obj', function (object) {
 
 // Function to add a tree at a specific position
 function addHouseItem(position) {
+    let isRoof = false;
+    if (position.pathToImage.contains('roof')) {
+        isRoof = true;
+    }
     objLoader.load(`./models/${position.pathToObject}`, function (object) {
         object.traverse(function (child) {
             if (child instanceof THREE.Mesh) {
